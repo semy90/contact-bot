@@ -1,3 +1,4 @@
+from types import NoneType
 from typing import List
 
 import sqlalchemy as sa
@@ -30,14 +31,16 @@ class Database:
     async def make_new_admin(self, name: str) -> None:
         query = sa.select(UserModel).where(UserModel.name == name)
         user = await self.session.scalar(query)
-        user.is_admin = True
-        await self.session.commit()
+        if isinstance(user, UserModel):
+            user.is_admin = True
+            await self.session.commit()
 
     async def del_admin(self, name: str) -> None:
         query = sa.select(UserModel).where(UserModel.name == name)
         user = await self.session.scalar(query)
-        user.is_admin = False
-        await self.session.commit()
+        if isinstance(user, UserModel):
+            user.is_admin = False
+            await self.session.commit()
 
 
 

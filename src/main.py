@@ -5,6 +5,7 @@ import os
 
 from aiogram import Bot, Dispatcher
 
+from bot.filters import include_filters
 from bot.handlers import include_routers
 from bot.middlewares import include_middlewares
 from database.session import init_db
@@ -18,6 +19,7 @@ async def main():
     session_maker = await init_db(settings)
     include_routers(dp)
     include_middlewares(dp, session_maker)
+    include_filters(dp, session_maker)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, session_maker=session_maker)
