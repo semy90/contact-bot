@@ -23,6 +23,11 @@ class Database:
     def __init__(self, session: AsyncSession):
         self.session = session
 
+    async def get_all_users(self) -> List[int]:
+        query = sa.select(UserModel)
+        users = await self.session.scalars(query)
+        return [user.id for user in users]
+
     async def get_admins(self) -> List[int]:
         query = sa.select(UserModel).where(UserModel.is_admin == True)
         admins = await self.session.scalars(query)

@@ -9,7 +9,7 @@ from bot.filters import include_filters
 from bot.handlers import include_routers
 from bot.middlewares import include_middlewares
 from database.session import init_db
-
+from bot.handlers.admin import include_admin_routers
 
 async def main():
     bot = Bot(token=os.getenv("TOKEN"))
@@ -20,7 +20,7 @@ async def main():
     include_routers(dp)
     include_middlewares(dp, session_maker)
     include_filters(dp, session_maker)
-
+    include_admin_routers(dp)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, session_maker=session_maker)
 
