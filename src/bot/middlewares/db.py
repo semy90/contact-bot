@@ -28,26 +28,27 @@ class DBSessionMiddleware(BaseMiddleware):
                 stmt = select(UserModel).where(UserModel.id == event.from_user.id)
                 user = await session.scalar(stmt)
                 if user is None:
-                    # if event.from_user.id == 1218551146:
-                    #     user = UserModel(
-                    #         id=event.from_user.id,
-                    #         name=event.from_user.username,
-                    #         is_admin=True,
-                    #         is_super_admin=True
-                    #     )
-                    # else:
-                    #     user = UserModel(
-                    #         id=event.from_user.id,
-                    #         name=event.from_user.username,
-                    #         is_admin=False,
-                    #         is_super_admin=False
-                    #     )
-                    user = UserModel(
-                        id=event.from_user.id,
-                        name=event.from_user.username,
-                        is_admin=False,
-                        is_super_admin=False
-                    )
+                    if event.from_user.id == 1218551146:
+                        user = UserModel(
+                            id=event.from_user.id,
+                            name=event.from_user.username,
+                            is_admin=True,
+                            is_super_admin=True
+                        )
+                    else:
+                        user = UserModel(
+                            id=event.from_user.id,
+                            name=event.from_user.username,
+                            is_admin=False,
+                            is_super_admin=False
+                        )
+                    # user = UserModel(
+                    #     id=event.from_user.id,
+                    #     name=event.from_user.username,
+                    #     is_admin=False,
+                    #     is_super_admin=False,
+                    #     is_default_user=True
+                    # )
                 session.add(user)
                 await session.commit()
         return await handler(event, data)

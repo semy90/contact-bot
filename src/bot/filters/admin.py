@@ -8,20 +8,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from database.models import UserModel
 
 
-# class AdminFilter(BaseFilter):
-#     def __init__(self, session_maker: async_sessionmaker[AsyncSession]):
-#         self.session_maker = session_maker
-#
-#     async def __call__(self, event: TelegramObject) -> bool:
-#         async with self.session_maker() as session:
-#             async with session.begin():
-#                 stmt = select(UserModel)
-#                 users = await session.scalars(stmt)
-#                 if event.from_user in users:
-#                     return True
-#                 print(list(users))
-#                 return False
-
 class AdminFilter(BaseFilter):
     async def __call__(self, event: TelegramObject, session_maker: async_sessionmaker[AsyncSession]) -> bool:
         async with session_maker() as session:

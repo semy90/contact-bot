@@ -38,7 +38,7 @@ async def operation_admin(message: Message, state: FSMContext, session_maker: as
     await state.clear()
 
 
-@add_router.callback_query(F.data == 'admin')
-async def cancel_feedback(call: CallbackQuery, state: FSMContext):
-    await call.message.answer('Отменено!')
-    await state.clear()
+# @add_router.callback_query(F.data == 'admin', AdminFilter())
+# async def cancel_feedback(call: CallbackQuery, state: FSMContext):
+#     await call.message.answer('Отменено!')
+#     await state.clear()

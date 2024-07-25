@@ -11,3 +11,4 @@ class UserModel(AlchemyBaseModel):
     name: Mapped[str] = mapped_column(String(64), unique=False, nullable=True)
     is_admin: Mapped[bool] = mapped_column(Boolean)
     is_super_admin: Mapped[bool] = mapped_column(Boolean)
+

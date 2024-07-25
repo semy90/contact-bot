@@ -5,6 +5,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+
 from src.database.gateway import Database
 from src.database.models.user import UserModel
 
@@ -21,6 +22,6 @@ async def start_handler(message: Message):
                          reply_markup=menu_bulder.as_markup()
                          )
 
-# @start_router.message()
-# async def i_dont_understand(message: Message):
-#     await message.answer("Я вас не понимаю!")
+@start_router.message()
+async def i_dont_understand(message: Message):
+    await message.answer("Я вас не понимаю!")
