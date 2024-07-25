@@ -18,7 +18,6 @@ short_newsletter_router = Router(name=__name__)
 @short_newsletter_router.message(AdminFilter(), F.text.startswith("/message"))
 async def short_message(message: Message, session_maker: async_sessionmaker):
     _, *tmp = message.text.split()
-    print(tmp)
     text = ' '.join(tmp)
     async with session_maker() as session:
         base = Database(session)

@@ -21,6 +21,6 @@ async def admin_menu(message: Message):
     kb_builder.add(InlineKeyboardButton(text="Создать админа", callback_data='add_admin'))
     kb_builder.add(InlineKeyboardButton(text="Удалить админа", callback_data='del_admin'))
     kb_builder.row(InlineKeyboardButton(text="Создать рассылку", callback_data='create_newsletter'))
-    kb_builder.add(InlineKeyboardButton(text="Создать пост", callback_data='create_post'))
+    kb_builder.add(InlineKeyboardButton(text="Управление заявками", callback_data='contact_history'))
     kb_builder.row(InlineKeyboardButton(text="Назад", callback_data='menu'))
     await message.answer("Админ-панель", reply_markup=kb_builder.as_markup(resize_keyboard=True))
