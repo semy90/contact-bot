@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from src.database.gateway import Database
 from aiogram.fsm.context import FSMContext
 
-from bot.filters.admin import AdminFilter
+from bot.filters.admin import AdminFilter, SuperAdminFilter
 
 del_router = Router(name=__name__)
 
@@ -16,7 +16,7 @@ class DelUserNameSate(StatesGroup):
     waiting_username = State()
 
 
-@del_router.callback_query(AdminFilter(), F.data == 'del_admin')
+@del_router.callback_query(SuperAdminFilter(), F.data == 'del_admin')
 async def del_admin(query: CallbackQuery, state: FSMContext):
     back_button = InlineKeyboardBuilder()
     back_button.add(InlineKeyboardButton(text="Отменить", callback_data="cancel_admin"))
@@ -25,7 +25,7 @@ async def del_admin(query: CallbackQuery, state: FSMContext):
     await state.set_state(DelUserNameSate.waiting_username)
 
 
-@del_router.message(AdminFilter(), DelUserNameSate.waiting_username)
+@del_router.message(SuperAdminFilter(), DelUserNameSate.waiting_username)
 async def operation_admin(message: Message, state: FSMContext, session_maker: async_sessionmaker):
     name = message.text.replace('@', '').replace(' ', '')
     if name == message.from_user.username:
