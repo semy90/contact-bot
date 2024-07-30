@@ -28,6 +28,10 @@ async def del_admin(query: CallbackQuery, state: FSMContext):
 @del_router.message(AdminFilter(), DelUserNameSate.waiting_username)
 async def operation_admin(message: Message, state: FSMContext, session_maker: async_sessionmaker):
     name = message.text.replace('@', '').replace(' ', '')
+    if name == message.from_user.username:
+        await message.answer('Ты зачем себя удаляешь?')
+        await state.clear()
+        return
     async with session_maker() as session:
         base = Database(session)
         await base.del_admin(name)

@@ -38,7 +38,7 @@ async def handle_feedback_message(message: Message, state: FSMContext, session_m
         await message.answer("Спасибо за отзыв! Ваше сообщение было передано администратору.")
         await state.clear()
 
-    @contact_router.callback_query(F.data == 'cancel')
-    async def cancel_feedback(call: CallbackQuery, state: FSMContext):
-        await call.message.answer('Отменено!')
-        await state.clear()
+@contact_router.callback_query(F.data == 'cancel')
+async def cancel_feedback(query: CallbackQuery, state: FSMContext):
+    await query.message.answer('Отменено!')
+    await state.clear()

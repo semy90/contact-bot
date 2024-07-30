@@ -5,7 +5,7 @@ import os
 
 from aiogram import Bot, Dispatcher
 
-# from bot.filters import include_filters
+
 from bot.handlers import include_routers
 from bot.middlewares import include_middlewares
 from database.session import init_db
@@ -21,7 +21,7 @@ async def main():
     session_maker = await init_db(settings)
 
     include_middlewares(dp, session_maker)
-    # include_filters(dp)
+
     include_contact_routers(dp)
     include_admin_routers(dp)
     include_routers(dp)

@@ -10,4 +10,4 @@ class ApplicationModel(AlchemyBaseModel):
     user_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     username: Mapped[str] = mapped_column(String(64), unique=False, nullable=True)
     text: Mapped[str] = mapped_column(String(512), unique=False, nullable=True)
-    # user = relationship("UserModel")
+

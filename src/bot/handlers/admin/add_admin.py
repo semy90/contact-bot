@@ -21,7 +21,7 @@ class AddUserNameSate(StatesGroup):
 @add_router.callback_query(AdminFilter(), F.data == 'add_admin')
 async def create_admin(query: CallbackQuery, state: FSMContext):
     back_button = InlineKeyboardBuilder()
-    back_button.add(InlineKeyboardButton(text="Отменить", callback_data="admin"))
+    back_button.add(InlineKeyboardButton(text="Отменить", callback_data="add_admin_cancel"))
     await query.message.answer("Введите username пользователя",
                                reply_markup=back_button.as_markup())
     await state.set_state(AddUserNameSate.waiting_username)
@@ -30,6 +30,10 @@ async def create_admin(query: CallbackQuery, state: FSMContext):
 @add_router.message(AdminFilter(), AddUserNameSate.waiting_username)
 async def operation_admin(message: Message, state: FSMContext, session_maker: async_sessionmaker):
     name = message.text.replace('@', '').replace(' ', '')
+    if name == message.from_user.username:
+        await message.answer('Ты зачем себя добавляешь?')
+        await state.clear()
+        return
     async with session_maker() as session:
         base = Database(session)
         await base.make_new_admin(name)
@@ -38,7 +42,7 @@ async def operation_admin(message: Message, state: FSMContext, session_maker: as
     await state.clear()
 
 
-# @add_router.callback_query(F.data == 'admin', AdminFilter())
-# async def cancel_feedback(call: CallbackQuery, state: FSMContext):
-#     await call.message.answer('Отменено!')
-#     await state.clear()
+@add_router.callback_query(F.data == 'add_admin_cancel', AdminFilter())
+async def cancel_feedback(call: CallbackQuery, state: FSMContext):
+    await call.message.answer('Отменено!')
+    await state.clear()

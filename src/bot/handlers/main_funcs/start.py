@@ -13,7 +13,6 @@ start_router = Router(name=__name__)
 
 
 @start_router.message(CommandStart())
-# @start_router.callback_query(F.data == "menu")
 async def start_handler(message: Message):
     menu_bulder = InlineKeyboardBuilder()
     menu_bulder.add(InlineKeyboardButton(text="О нас", callback_data='about_us'))
@@ -22,6 +21,20 @@ async def start_handler(message: Message):
                          reply_markup=menu_bulder.as_markup()
                          )
 
+
+@start_router.callback_query(F.data == 'menu')
+async def start_handler(query: CallbackQuery):
+    menu_bulder = InlineKeyboardBuilder()
+    menu_bulder.add(InlineKeyboardButton(text="О нас", callback_data='about_us'))
+    menu_bulder.add(InlineKeyboardButton(text="Связаться с нами", callback_data='contact_us'))
+    await query.message.edit_text('Меню бота: ',
+                         reply_markup=menu_bulder.as_markup()
+                         )
+
+
+
+
+
 @start_router.message()
 async def i_dont_understand(message: Message):
-    await message.answer("Я вас не понимаю!")
+    await message.reply("Я вас не понимаю!")

@@ -21,6 +21,21 @@ class ContactGateway:
         self.session = session
 
 
+    async def get_application_by_page(self, page : int):
+        query = sa.select(ApplicationModel)
+        applications = list(await self.session.scalars(query))
+        for i in range(len(applications)):
+            if i == page - 1:
+                application = applications[i]
+                tmp_dict = {
+                    'id': application.id,
+                    'user_id': application.user_id,
+                    'username': application.username,
+                    'text': application.text
+                }
+                return tmp_dict
+
+
 
     async def del_by_tag(self, tag : int):
         query = sa.delete(ApplicationModel).where(tag == ApplicationModel.id)
@@ -39,6 +54,8 @@ class ContactGateway:
     async def get_application_by_tag(self, tag: int):
         query = sa.select(ApplicationModel).where(tag == ApplicationModel.id)
         application = await self.session.scalar(query)
+        if isinstance(application, NoneType):
+            return NoneType
         tmp_dict = {
             'id': application.id,
             'user_id': application.user_id,
