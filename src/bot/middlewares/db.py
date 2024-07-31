@@ -47,7 +47,6 @@ class DBSessionMiddleware(BaseMiddleware):
                     #     name=event.from_user.username,
                     #     is_admin=False,
                     #     is_super_admin=False,
-                    #     is_default_user=True
                     # )
                 session.add(user)
                 await session.commit()

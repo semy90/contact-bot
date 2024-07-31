@@ -12,13 +12,18 @@ from src.database.gateway import Database, ContactGateway
 
 del_application_router = Router(name=__name__)
 
+
 @del_application_router.message(F.text.startswith('/delete'), AdminFilter())
 async def del_short_application(message: Message, session_maker: async_sessionmaker):
-    _, *tmp = message.text.split()
-    print(tmp)
-    tag = ' '.join(tmp)
+    try:
+        text = message.text.split()[1]
+    except IndexError:
+        await message.answer("Попробуйте повторно")
+        return
+    if not text.isdigit():
+        await message.answer("Попробуйте повторно и введите ТОЛЬКО цифры")
+        return
 
-    async with session_maker() as session:
-        contact = ContactGateway(session)
-        await contact.del_by_tag(int(tag))
+    contact = ContactGateway(session_maker())
+    await contact.del_by_tag(int(text))
     await message.answer("Обращение удалено!")

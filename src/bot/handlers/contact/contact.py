@@ -7,6 +7,8 @@ from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
+from bot.callback_data.delete_page_factory import DelCallbackData
+from database.models import ApplicationModel
 from src.database.gateway import Database, ContactGateway
 
 bot = Bot(os.getenv('TOKEN'))
@@ -31,12 +33,28 @@ async def handle_feedback_message(message: Message, state: FSMContext, session_m
     async with session_maker() as session:
         base = Database(session)
         contact = ContactGateway(session)
-        for admin in await base.get_admins():
-            await bot.send_message(admin,
-                                   f"Новый отзыв от @{message.from_user.username}, ID:{message.from_user.id}:\n{message.text}")
-        await contact.add_application(message.from_user.id, message.from_user.username, message.text)
-        await message.answer("Спасибо за отзыв! Ваше сообщение было передано администратору.")
-        await state.clear()
+
+    await contact.add_application(message.from_user.id, message.from_user.username, message.text)
+    alls = await contact.get_all_applications()
+    cur_mes = alls[-1]
+
+    button = InlineKeyboardBuilder()
+    button.add(
+        InlineKeyboardButton(text="Удалить", callback_data=DelCallbackData(page=0, id=int(cur_mes['id'])).pack()))
+
+    for admin in await base.get_admins():
+        await bot.send_message(admin,
+                            f"Новое обращение от @{cur_mes['username']}, ID:{cur_mes['user_id']}, ID заявки: {cur_mes['id']}\n\n{cur_mes['text']}",
+                            reply_markup=button.as_markup())
+
+    # for admin in await base.get_admins():
+    #     await bot.send_message(admin,
+    #                            f"Новое обращение от @{message.from_user.username}, ID:{message.from_user.id}\n{message.text}")
+    # await contact.add_application(message.from_user.id, message.from_user.username, message.text)
+
+    await message.answer("Спасибо за заявку! Ваше обращение было передано администратору.")
+    await state.clear()
+
 
 @contact_router.callback_query(F.data == 'cancel')
 async def cancel_feedback(query: CallbackQuery, state: FSMContext):
