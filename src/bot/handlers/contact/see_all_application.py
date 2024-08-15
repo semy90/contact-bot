@@ -1,12 +1,7 @@
-import pprint
-
-from aiogram import Bot, Router, F
-from aiogram.filters.callback_data import CallbackData
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import CallbackQuery, InlineKeyboardButton, Message, InlineKeyboardMarkup
+from aiogram import Router
+from aiogram.types import CallbackQuery, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select
 
 from bot.callback_data.delete_page_factory import DelCallbackData
@@ -14,7 +9,7 @@ from bot.callback_data.page_factory import PageCallbackData
 from bot.filters import AdminFilter
 from bot.keyboards.contact import get_all_contact_back_button
 from database.gateway import ContactGateway
-from database.models import ContactModel, UserModel
+from database.models import ContactModel
 
 see_all_applications = Router(name=__name__)
 

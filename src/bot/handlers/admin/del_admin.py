@@ -1,15 +1,14 @@
 from aiogram import F, Router
-from aiogram.filters import CommandStart, Command
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, InlineKeyboardButton, CallbackQuery, KeyboardButton, ReplyKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+
+from aiogram.types import Message, InlineKeyboardButton, CallbackQuery
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.states.admin import DelUserNameState
 from src.database.gateway import Database
 from aiogram.fsm.context import FSMContext
 
-from bot.filters.admin import AdminFilter, SuperAdminFilter
+from bot.filters.admin import SuperAdminFilter
 
 del_router = Router(name=__name__)
 

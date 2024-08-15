@@ -2,15 +2,13 @@ import os
 
 from aiogram import Bot, Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import  AsyncSession
 
 from bot.filters import AdminFilter
 from bot.states.admin import CreateNewsLetterState
 from database.gateway import Database
-from utils import sender
 from utils.sender import send_preview, start_sender
 
 bot = Bot(os.getenv("TOKEN"))

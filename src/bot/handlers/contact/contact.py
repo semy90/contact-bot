@@ -1,24 +1,18 @@
 import os
-import pprint
-from typing import Dict, Any
 
 from aiogram import Bot, Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.callback_data.delete_page_factory import DelCallbackData
 from bot.keyboards.contact import get_back_button
 from bot.states.contact import ContactState
-from database.models import ContactModel
 from src.database.gateway import Database, ContactGateway
 
 bot = Bot(os.getenv('TOKEN'))
 contact_router = Router(name=__name__)
-
-
 
 
 @contact_router.callback_query(F.data == "contact_us")

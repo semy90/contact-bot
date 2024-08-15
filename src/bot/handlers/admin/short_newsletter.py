@@ -2,11 +2,8 @@ import asyncio
 import os
 
 from aiogram import Bot, Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
-from aiogram.utils.keyboard import InlineKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from aiogram.types import  Message
+from sqlalchemy.ext.asyncio import  AsyncSession
 
 from bot.filters import AdminFilter
 from database.gateway import Database

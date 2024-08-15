@@ -1,10 +1,6 @@
 from aiogram import F, Router
-from aiogram.filters import CommandStart, Command
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, InlineKeyboardButton, CallbackQuery, KeyboardButton, ReplyKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+from aiogram.types import CallbackQuery
 
-from bot.callback_data.page_factory import PageCallbackData
 from bot.filters import AdminFilter
 from bot.keyboards.contact import get_control_panel
 

@@ -1,17 +1,15 @@
 from aiogram import F, Router
-from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, InlineKeyboardButton, CallbackQuery, KeyboardButton, ReplyKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+from aiogram.types import Message, InlineKeyboardButton, CallbackQuery
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from bot.callback_data.delete_page_factory import DelCallbackData
-from bot.callback_data.page_factory import PageCallbackData
+
 from bot.filters import AdminFilter
 from bot.keyboards.contact import  get_search_application_back_button
 from bot.states.contact import CaseState
-from database.gateway import Database, ContactGateway
+from database.gateway import  ContactGateway
 
 search_router = Router(name=__name__)
 

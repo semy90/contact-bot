@@ -1,12 +1,8 @@
-from typing import Union
-
 from aiogram.filters import BaseFilter
-from aiogram.types import Message, TelegramObject
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from aiogram.types import TelegramObject
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.gateway import Database
-from database.models import UserModel
 
 
 class AdminFilter(BaseFilter):

@@ -1,18 +1,14 @@
 from aiogram import F, Router
-from aiogram.filters import CommandStart, Command
-from aiogram import F, Router
-from aiogram.filters import CommandStart, Command
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, InlineKeyboardButton, CallbackQuery, KeyboardButton, ReplyKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+
+from aiogram.types import Message, CallbackQuery
+from sqlalchemy.ext.asyncio import  AsyncSession
 
 from bot.keyboards.admin import get_create_admin_back_button
 from bot.states.admin import AddUserNameState
 from src.database.gateway import Database
 from aiogram.fsm.context import FSMContext
 
-from bot.filters.admin import AdminFilter, SuperAdminFilter
+from bot.filters.admin import  SuperAdminFilter
 
 add_router = Router(name=__name__)
 
