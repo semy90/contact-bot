@@ -12,26 +12,23 @@ from sqlalchemy import func, select
 from bot.callback_data.delete_page_factory import DelCallbackData
 from bot.callback_data.page_factory import PageCallbackData
 from bot.filters import AdminFilter
+from bot.keyboards.contact import get_all_contact_back_button
 from database.gateway import ContactGateway
-from database.models import ApplicationModel, UserModel
+from database.models import ContactModel, UserModel
 
 see_all_applications = Router(name=__name__)
 
 
-
 @see_all_applications.callback_query(PageCallbackData.filter(), AdminFilter())
-async def see_all_apps(query: CallbackQuery, session_maker: async_sessionmaker, callback_data: PageCallbackData):
+async def see_all_apps(query: CallbackQuery, session: AsyncSession, callback_data: PageCallbackData):
     cur = int(str(callback_data).split('=')[1])
-    app = ContactGateway(session_maker())
-    async with session_maker() as session:
-        async with session.begin():
-            result = await session.execute(select(func.count()).where(ApplicationModel.id))
-            count_pages = result.scalar()
+
+    contact = ContactGateway(session)
+    result = await session.execute(select(func.count()).where(ContactModel.id))
+    count_pages = result.scalar()
 
     if count_pages == 0:
-        backbuttonbuilder = InlineKeyboardBuilder()
-        backbuttonbuilder.add(InlineKeyboardButton(text="Назад", callback_data='contact_history'))
-        await query.message.edit_text("Нет обращений!", reply_markup=backbuttonbuilder.as_markup())
+        await query.message.edit_text("Нет обращений!", reply_markup=get_all_contact_back_button())
         return
 
     if cur < 1:
@@ -39,7 +36,7 @@ async def see_all_apps(query: CallbackQuery, session_maker: async_sessionmaker, 
     if cur > count_pages:
         cur = 1
 
-    cur_application = await app.get_application_by_page(cur)
+    cur_application = await contact.get_application_by_page(cur)
 
     kb_bulder = InlineKeyboardBuilder()
     kb_bulder.add(InlineKeyboardButton(text="<-", callback_data=PageCallbackData(page=cur - 1).pack()))
@@ -55,10 +52,7 @@ async def see_all_apps(query: CallbackQuery, session_maker: async_sessionmaker, 
 
 
 @see_all_applications.callback_query(DelCallbackData.filter(), AdminFilter())
-async def del_cur_application(query: CallbackQuery, session_maker: async_sessionmaker, callback_data: DelCallbackData):
-    app = ContactGateway(session_maker())
-    backbuttonbuilder = InlineKeyboardBuilder()
-    backbuttonbuilder.add(InlineKeyboardButton(text="Назад", callback_data='contact_history'))
-
-    await app.del_by_tag(callback_data.id)
-    await query.message.edit_text('Обращение удалено!', reply_markup=backbuttonbuilder.as_markup())
+async def del_cur_application(query: CallbackQuery, session: AsyncSession, callback_data: DelCallbackData):
+    contact = ContactGateway(session)
+    await contact.del_by_tag(callback_data.id)
+    await query.message.edit_text('Обращение удалено!', reply_markup=get_all_contact_back_button())

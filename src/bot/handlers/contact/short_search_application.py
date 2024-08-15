@@ -27,10 +27,8 @@ async def short_search(message: Message, session_maker: async_sessionmaker):
         await message.answer("Попробуйте повторно и введите ТОЛЬКО цифры")
         return
 
-    app = ContactGateway(session_maker())
-    cur_application = await app.get_application_by_tag(int(text))
-
-
+    contact = ContactGateway(session_maker())
+    cur_application = await contact.get_application_by_tag(int(text))
 
     button = InlineKeyboardBuilder()
     button.add(InlineKeyboardButton(text="Удалить", callback_data=DelCallbackData(page=0, id=int(text)).pack()))

@@ -14,7 +14,7 @@ del_application_router = Router(name=__name__)
 
 
 @del_application_router.message(F.text.startswith('/delete'), AdminFilter())
-async def del_short_application(message: Message, session_maker: async_sessionmaker):
+async def del_short_application(message: Message, session:AsyncSession):
     try:
         text = message.text.split()[1]
     except IndexError:
@@ -24,6 +24,6 @@ async def del_short_application(message: Message, session_maker: async_sessionma
         await message.answer("Попробуйте повторно и введите ТОЛЬКО цифры")
         return
 
-    contact = ContactGateway(session_maker())
+    contact = ContactGateway(session)
     await contact.del_by_tag(int(text))
     await message.answer("Обращение удалено!")

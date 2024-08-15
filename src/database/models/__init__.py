@@ -1,2 +1,2 @@
 from .user import UserModel
-from .contact import ApplicationModel
+from .contact import ContactModel

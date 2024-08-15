@@ -1,3 +1,4 @@
+import os
 from typing import Any, Awaitable, Callable, Dict, Union
 
 from aiogram import BaseMiddleware
@@ -22,32 +23,8 @@ class DBSessionMiddleware(BaseMiddleware):
             event: TelegramObject,
             data: Dict[str, Any]
     ) -> Any:
-        # session_maker: async_sessionmaker = data['session_maker']
         async with self.session_maker() as session:
-            async with session.begin():
-                stmt = select(UserModel).where(UserModel.id == event.from_user.id)
-                user = await session.scalar(stmt)
-                if user is None:
-                    if event.from_user.id == 1218551146:
-                        user = UserModel(
-                            id=event.from_user.id,
-                            name=event.from_user.username,
-                            is_admin=True,
-                            is_super_admin=True
-                        )
-                    else:
-                        user = UserModel(
-                            id=event.from_user.id,
-                            name=event.from_user.username,
-                            is_admin=False,
-                            is_super_admin=False
-                        )
-                    # user = UserModel(
-                    #     id=event.from_user.id,
-                    #     name=event.from_user.username,
-                    #     is_admin=False,
-                    #     is_super_admin=False,
-                    # )
-                session.add(user)
-                await session.commit()
+            data['database'] = Database(session)
+            data['session'] = session
+            await data['database'].add_new_user(event)
         return await handler(event, data)

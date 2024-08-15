@@ -5,9 +5,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from bot.filters import AdminFilter
+from bot.states.admin import CreateNewsLetterState
 from database.gateway import Database
 from utils import sender
 from utils.sender import send_preview, start_sender
@@ -15,13 +16,6 @@ from utils.sender import send_preview, start_sender
 bot = Bot(os.getenv("TOKEN"))
 newsletter_router = Router(name=__name__)
 
-
-class CreateNewsLetterState(StatesGroup):
-    get_text = State()
-    get_photo = State()
-    get_kb_text = State()
-    get_kb_url = State()
-    confirm_state = State()
 
 
 @newsletter_router.callback_query(AdminFilter(), F.data == 'create_newsletter')
@@ -84,11 +78,7 @@ async def cancel_send(query: CallbackQuery, state: FSMContext):
 
 
 @newsletter_router.callback_query(AdminFilter(), F.data == "sent_now", CreateNewsLetterState.confirm_state, )
-async def confirm_send(
-        query: CallbackQuery,
-        state: FSMContext,
-        session_maker: async_sessionmaker
-):
+async def confirm_send( query: CallbackQuery,state: FSMContext, session: AsyncSession):
     data = await state.get_data()
     await query.message.answer('Рассылка началась')
     await state.clear()
@@ -96,15 +86,14 @@ async def confirm_send(
 
     message_id = data.get('message_id')
 
-    async with session_maker() as session:
-        base = Database(session)
-        user_ids = await base.get_all_users()
-        count = await start_sender(
-            session=session,
-            bot=bot,
-            data=data,
-            user_ids=user_ids,
-            from_chat_id=query.message.chat.id,
-            message_id=message_id
-        )
-        await query.message.answer(f'Отправлено {count} сообщений')
+    base = Database(session)
+    user_ids = await base.get_all_users()
+    count = await start_sender(
+        session=session,
+        bot=bot,
+        data=data,
+        user_ids=user_ids,
+        from_chat_id=query.message.chat.id,
+        message_id=message_id
+    )
+    await query.message.answer(f'Отправлено {count} сообщений')

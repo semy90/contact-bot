@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import AlchemyBaseModel
 
 
-class ApplicationModel(AlchemyBaseModel):
+class ContactModel(AlchemyBaseModel):
     __tablename__ = "contact"
     id: Mapped[int] = mapped_column(Integer, unique=True, nullable=False, primary_key=True)
     user_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
