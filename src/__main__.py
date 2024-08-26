@@ -6,11 +6,11 @@ import os
 from aiogram import Bot, Dispatcher
 
 
-from bot.handlers import include_routers
-from bot.middlewares import include_middlewares
-from database.session import init_db
-from bot.handlers.admin import include_admin_routers
-from bot.handlers.contact import include_contact_routers
+from src.bot.handlers import include_routers
+from src.bot.middlewares import include_middlewares
+from src.database.session import init_db
+from src.bot.handlers.admin import include_admin_routers
+from src.bot.handlers.contact import include_contact_routers
 
 
 async def main():

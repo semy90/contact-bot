@@ -3,9 +3,9 @@ from aiogram.types import Message, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from bot.callback_data.delete_page_factory import DelCallbackData
-from bot.filters import AdminFilter
-from database.gateway import ContactGateway
+from src.bot.callback_data.delete_page_factory import DelCallbackData
+from src.bot.filters import AdminFilter
+from src.database.gateway import ContactGateway
 
 short_search_router = Router(name=__name__)
 

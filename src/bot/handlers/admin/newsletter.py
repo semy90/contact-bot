@@ -6,10 +6,10 @@ from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import  AsyncSession
 
-from bot.filters import AdminFilter
-from bot.states.admin import CreateNewsLetterState
-from database.gateway import Database
-from utils.sender import send_preview, start_sender
+from src.bot.filters import AdminFilter
+from src.bot.states.admin import CreateNewsLetterState
+from src.database.gateway import Database
+from src.utils.sender import send_preview, start_sender
 
 bot = Bot(os.getenv("TOKEN"))
 newsletter_router = Router(name=__name__)

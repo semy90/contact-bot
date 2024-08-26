@@ -1,6 +1,6 @@
 from aiogram import Dispatcher
 
-from bot.handlers.contact.see_all_application import see_all_applications
+from src.bot.handlers.contact.see_all_application import see_all_applications
 from .contact import contact_router
 from .contact_panel import contact_adm_router
 from .search_application import search_router

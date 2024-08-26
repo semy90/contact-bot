@@ -5,7 +5,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot.keyboards.main_funcs import get_start_keyboard
+from src.bot.keyboards.main_funcs import get_start_keyboard
 from src.database.gateway import Database
 from src.database.models.user import UserModel
 

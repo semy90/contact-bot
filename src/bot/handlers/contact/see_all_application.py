@@ -4,12 +4,12 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select
 
-from bot.callback_data.delete_page_factory import DelCallbackData
-from bot.callback_data.page_factory import PageCallbackData
-from bot.filters import AdminFilter
-from bot.keyboards.contact import get_all_contact_back_button
-from database.gateway import ContactGateway
-from database.models import ContactModel
+from src.bot.callback_data.delete_page_factory import DelCallbackData
+from src.bot.callback_data.page_factory import PageCallbackData
+from src.bot.filters import AdminFilter
+from src.bot.keyboards.contact import get_all_contact_back_button
+from src.database.gateway import ContactGateway
+from src.database.models import ContactModel
 
 see_all_applications = Router(name=__name__)
 

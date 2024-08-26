@@ -6,9 +6,9 @@ from aiogram.types import CallbackQuery, InlineKeyboardButton, Message
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot.callback_data.delete_page_factory import DelCallbackData
-from bot.keyboards.contact import get_back_button
-from bot.states.contact import ContactState
+from src.bot.callback_data.delete_page_factory import DelCallbackData
+from src.bot.keyboards.contact import get_back_button
+from src.bot.states.contact import ContactState
 from src.database.gateway import Database, ContactGateway
 
 bot = Bot(os.getenv('TOKEN'))

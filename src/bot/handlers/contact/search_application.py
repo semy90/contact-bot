@@ -6,10 +6,10 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from bot.callback_data.delete_page_factory import DelCallbackData
 
-from bot.filters import AdminFilter
-from bot.keyboards.contact import  get_search_application_back_button
-from bot.states.contact import CaseState
-from database.gateway import  ContactGateway
+from src.bot.filters import AdminFilter
+from src.bot.keyboards.contact import  get_search_application_back_button
+from src.bot.states.contact import CaseState
+from src.database.gateway import  ContactGateway
 
 search_router = Router(name=__name__)
 

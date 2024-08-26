@@ -4,7 +4,7 @@ from aiogram.types import Message, InlineKeyboardButton, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot.states.admin import DelUserNameState
+from src.bot.states.admin import DelUserNameState
 from src.database.gateway import Database
 from aiogram.fsm.context import FSMContext
 

@@ -1,0 +1,9 @@
+version: '3.10'
+services:
+  bot:
+    build: .
+    command: sh -c "python -m src"
+    env_file:
+      - ./.env
+    restart: always
+

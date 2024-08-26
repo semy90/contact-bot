@@ -1,8 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from bot.callback_data.delete_page_factory import DelCallbackData
-from bot.callback_data.page_factory import PageCallbackData
+from src.bot.callback_data.delete_page_factory import DelCallbackData
+from src.bot.callback_data.page_factory import PageCallbackData
 
 
 def get_back_button() -> InlineKeyboardMarkup:

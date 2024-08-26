@@ -2,8 +2,8 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
-from bot.keyboards.admin import get_admin_menu, get_admin_menu_contact
-from bot.filters.admin import AdminFilter, SuperAdminFilter
+from src.bot.keyboards.admin import get_admin_menu, get_admin_menu_contact
+from src.bot.filters.admin import AdminFilter, SuperAdminFilter
 
 admin_router = Router(name=__name__)
 

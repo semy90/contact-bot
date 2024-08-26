@@ -5,8 +5,8 @@ from aiogram import Bot, Router, F
 from aiogram.types import  Message
 from sqlalchemy.ext.asyncio import  AsyncSession
 
-from bot.filters import AdminFilter
-from database.gateway import Database
+from src.bot.filters import AdminFilter
+from src.database.gateway import Database
 
 bot = Bot(os.getenv('TOKEN'))
 short_newsletter_router = Router(name=__name__)

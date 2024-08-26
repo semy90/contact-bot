@@ -1,8 +1,8 @@
 from aiogram import F, Router
 from aiogram.types import CallbackQuery
 
-from bot.filters import AdminFilter
-from bot.keyboards.contact import get_control_panel
+from src.bot.filters import AdminFilter
+from src.bot.keyboards.contact import get_control_panel
 
 contact_adm_router = Router(name=__name__)
 

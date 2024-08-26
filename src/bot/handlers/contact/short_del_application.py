@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.types import Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot.filters import AdminFilter
+from src.bot.filters import AdminFilter
 from src.database.gateway import ContactGateway
 
 del_application_router = Router(name=__name__)

@@ -3,8 +3,8 @@ from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery
 from sqlalchemy.ext.asyncio import  AsyncSession
 
-from bot.keyboards.admin import get_create_admin_back_button
-from bot.states.admin import AddUserNameState
+from src.bot.keyboards.admin import get_create_admin_back_button
+from src.bot.states.admin import AddUserNameState
 from src.database.gateway import Database
 from aiogram.fsm.context import FSMContext
 
